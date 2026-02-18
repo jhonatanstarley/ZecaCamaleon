@@ -1,0 +1,64 @@
+{
+  "manifest_version": 3,
+  "name": "🔥 Zeca: Quente viu, Quente vê!",
+  "version": "1.2",
+  "description": "Preenchimento inteligente de formulários via IA Local e Terminal.",
+  "permissions": [
+    "sidePanel",
+    "storage",
+    "activeTab",
+    "scripting",
+    "offscreen",
+    "downloads"
+  ],
+  "host_permissions": [
+    "https://generativelanguage.googleapis.com/*",
+    "https://open.bigmodel.cn/*"
+  ],
+  "background": {
+    "service_worker": "src/background.js",
+    "type": "module"
+  },
+  "side_panel": {
+    "default_path": "src/sidepanel/terminal.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "src/content.js"
+      ]
+    }
+  ],
+  "icons": {
+    "128": "icons/zeca128.png"
+  },
+  "action": {
+    "default_title": "Abrir Terminal do Zeca",
+    "default_icon": {
+      "16": "icons/zeca16.png"
+    }
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
+  },
+  "cross_origin_embedder_policy": {
+    "value": "require-corp"
+  },
+  "cross_origin_opener_policy": {
+    "value": "same-origin"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "src/brain/*",
+        "src/libs/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,530 @@
+/* src/sidepanel/terminal.css */
+
+/* --- CONFIGURAÇÕES GERAIS (TERMINAL) --- */
+body {
+  background-color: #0d0d0d;
+  color: #00ff41;
+  font-family: 'Courier New', monospace;
+  margin: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+
+#terminal-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  z-index: 1;
+  position: relative;
+}
+
+/* --- HEADER E CONTROLES --- */
+.header {
+  border-bottom: 1px solid #333;
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #ff5722;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.icon-btn {
+  background: none;
+  border: 1px solid #333;
+  color: #888;
+  border-radius: 4px;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  transition: 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-btn:hover {
+  background: #222;
+  color: #ff5722;
+  border-color: #ff5722;
+}
+
+/* --- OUTPUT DO TERMINAL --- */
+#output {
+  flex-grow: 1;
+  overflow-y: auto;
+  margin-bottom: 10px;
+  font-size: 13px;
+  scrollbar-width: none;
+}
+
+#output::-webkit-scrollbar {
+  display: none;
+}
+
+.line {
+  margin-bottom: 6px;
+  line-height: 1.4;
+  word-wrap: break-word;
+}
+
+.system {
+  color: #888;
+}
+
+.zeca {
+  color: #ff9800;
+  font-weight: bold;
+}
+
+.user {
+  color: #00ff41;
+}
+
+.error {
+  color: #ff0044;
+}
+
+.highlight {
+  color: #00e5ff;
+}
+
+/* --- ESTILOS DE MARKDOWN --- */
+.md-heading {
+  margin: 10px 0 5px 0;
+  color: #00e5ff;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+h1.md-heading {
+  font-size: 16px;
+  border-bottom: 1px dashed #333;
+}
+
+h2.md-heading {
+  font-size: 15px;
+}
+
+h3.md-heading,
+h4.md-heading {
+  font-size: 14px;
+  color: #ff9800;
+}
+
+pre {
+  background: #1a1a1a;
+  border: 1px solid #333;
+  padding: 8px;
+  border-radius: 4px;
+  overflow-x: auto;
+  margin: 5px 0;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+code {
+  font-family: 'Consolas', monospace;
+  font-size: 12px;
+  color: #e0e0e0;
+}
+
+.inline-code {
+  background: #222;
+  padding: 2px 4px;
+  border-radius: 3px;
+  color: #00ff41;
+  font-size: 12px;
+}
+
+.md-link {
+  color: #00e5ff;
+  text-decoration: none;
+  border-bottom: 1px dotted #00e5ff;
+}
+
+.md-link:hover {
+  background: #00e5ff;
+  color: #000;
+}
+
+.md-list-item {
+  margin-left: 5px;
+  display: block;
+}
+
+.md-bullet {
+  color: #ff5722;
+  margin-right: 5px;
+}
+
+/* --- ÁREA DE INPUT --- */
+.input-area {
+  display: flex;
+  border-top: 1px solid #333;
+  padding-top: 10px;
+  align-items: flex-start;
+  /* Align prompt to top */
+}
+
+.prompt {
+  color: #00ff41;
+  margin-right: 8px;
+  font-weight: bold;
+  padding-top: 2px;
+  /* Slight adjustment for alignment */
+}
+
+#command-input {
+  background: transparent;
+  border: none;
+  color: #fff;
+  flex-grow: 1;
+  outline: none;
+  font-family: inherit;
+  font-size: 13px;
+  resize: none;
+  /* Disable manual resize */
+  overflow-y: auto;
+  /* Scroll if needed */
+  max-height: 150px;
+  /* ~10 lines */
+  min-height: 20px;
+  /* 1 line */
+  line-height: 1.4;
+  padding: 0;
+  margin: 0;
+}
+
+#command-input::-webkit-scrollbar {
+  width: 6px;
+}
+
+#command-input::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 3px;
+}
+
+.send-btn {
+  background: transparent;
+  border: none;
+  color: #00ff41;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.2s;
+  margin-left: 5px;
+  align-self: flex-end;
+  /* Align to bottom for multiline */
+  margin-bottom: 2px;
+}
+
+.send-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.send-btn.stop {
+  color: #ff0044 !important;
+  animation: pulse 1.5s infinite;
+}
+
+.send-btn.stop:hover {
+  background: rgba(255, 0, 68, 0.2);
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* --- DRAWER (MENU LATERAL) --- */
+.drawer-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 90;
+  backdrop-filter: blur(2px);
+}
+
+.drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 220px;
+  height: 100%;
+  background: #111;
+  border-right: 1px solid #333;
+  z-index: 100;
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 2px 0 15px rgba(0, 0, 0, 0.5);
+}
+
+.drawer.hidden {
+  transform: translateX(-100%);
+}
+
+.drawer-header {
+  background: #1a1a1a;
+  padding: 12px;
+  border-bottom: 1px solid #333;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #ff9800;
+  font-weight: bold;
+}
+
+.drawer-content {
+  padding: 10px;
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+.section-title {
+  display: block;
+  font-size: 10px;
+  color: #555;
+  margin: 15px 0 5px 5px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.drawer-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 5px;
+  background: #0d0d0d;
+  border: 1px solid #222;
+  color: #ccc;
+  cursor: pointer;
+  text-align: left;
+  border-radius: 4px;
+  transition: 0.2s;
+  font-family: inherit;
+  font-size: 12px;
+}
+
+.drawer-item:hover {
+  background: #222;
+  border-color: #ff5722;
+  color: #ff5722;
+}
+
+.drawer-item i {
+  width: 16px;
+  text-align: center;
+}
+
+.drawer-footer {
+  padding: 10px;
+  text-align: center;
+  border-top: 1px solid #333;
+  color: #444;
+  font-size: 10px;
+}
+
+/* --- MODALS (ADMIN + HELP) --- */
+.hidden {
+  display: none !important;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(3px);
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: #111;
+  border: 1px solid #ff5722;
+  width: 90%;
+  max-width: 340px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  border-radius: 4px;
+  box-shadow: 0 0 25px rgba(255, 87, 34, 0.2);
+  color: #ddd;
+}
+
+.modal-header {
+  background: linear-gradient(90deg, #ff5722, #ff9800);
+  color: #000;
+  padding: 8px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 13px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 16px;
+  color: #000;
+}
+
+.modal-body {
+  padding: 15px;
+  font-size: 12px;
+  overflow-y: auto;
+}
+
+/* Admin Panel Specifics */
+.admin-content {
+  border-color: #00e5ff;
+  box-shadow: 0 0 25px rgba(0, 229, 255, 0.2);
+}
+
+.admin-content .modal-header {
+  background: linear-gradient(90deg, #0088cc, #00e5ff);
+}
+
+.form-group {
+  margin-bottom: 12px;
+}
+
+.form-group label {
+  display: block;
+  color: #00e5ff;
+  margin-bottom: 4px;
+  font-size: 11px;
+}
+
+.terminal-input,
+.terminal-select {
+  width: 100%;
+  background: #000;
+  color: #fff;
+  border: 1px solid #333;
+  padding: 8px;
+  font-family: inherit;
+  font-size: 12px;
+  border-radius: 3px;
+  box-sizing: border-box;
+}
+
+.terminal-input:focus,
+.terminal-select:focus {
+  border-color: #00e5ff;
+  outline: none;
+}
+
+.range-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+input[type=range] {
+  flex-grow: 1;
+  accent-color: #00e5ff;
+  cursor: pointer;
+}
+
+.action-btn {
+  background: #00e5ff;
+  color: #000;
+  border: none;
+  padding: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+  border-radius: 3px;
+  text-transform: uppercase;
+  transition: 0.2s;
+  margin-top: 10px;
+}
+
+.action-btn:hover {
+  background: #fff;
+  box-shadow: 0 0 10px #00e5ff;
+}
+
+.status-msg {
+  margin-top: 10px;
+  text-align: center;
+  color: #00ff41;
+  font-size: 11px;
+  min-height: 15px;
+}
+
+/* Utils */
+.zeca-intro p {
+  margin: 0 0 10px 0;
+  color: #aaa;
+}
+
+.cmd-list {
+  list-style: none;
+  padding: 0;
+}
+
+.cmd-list li {
+  margin-bottom: 5px;
+  border-bottom: 1px dotted #333;
+  padding-bottom: 3px;
+}
+
+.cmd {
+  color: #00ff41;
+  font-weight: bold;
+  margin-right: 5px;
+}

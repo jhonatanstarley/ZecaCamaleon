@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Candidato - Tech Selection</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 font-sans text-gray-900">
+
+    <div class="max-w-4xl mx-auto my-10 bg-white shadow-xl rounded-lg overflow-hidden">
+        <div class="bg-slate-800 p-8 text-white text-center">
+            <h1 class="text-3xl font-bold">Portal de Recrutamento Tech</h1>
+            <p class="mt-2 text-slate-300">Preencha seus dados para a vaga de Engenharia de Software</p>
+        </div>
+
+        <form id="form_cadastro_entrevista" class="p-8 space-y-8">
+            
+            <section>
+                <h2 class="text-xl font-semibold border-b-2 border-slate-100 pb-2 mb-4">1. Informações Pessoais</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="nome_completo" class="block text-sm font-medium">Nome Completo</label>
+                        <input type="text" id="nome_completo" name="nome_completo" required
+                            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-slate-500 focus:border-slate-500 p-2 border">
+                    </div>
+                    <div>
+                        <label for="email_contato" class="block text-sm font-medium">E-mail Profissional</label>
+                        <input type="email" id="email_contato" name="email_contato" required
+                            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-slate-500 focus:border-slate-500 p-2 border">
+                    </div>
+                    <div>
+                        <label for="perfil_linkedin" class="block text-sm font-medium">URL do LinkedIn</label>
+                        <input type="url" id="perfil_linkedin" name="perfil_linkedin" placeholder="https://linkedin.com/in/usuario"
+                            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-slate-500 focus:border-slate-500 p-2 border">
+                    </div>
+                    <div>
+                        <label for="perfil_github" class="block text-sm font-medium">URL do GitHub / Portfólio</label>
+                        <input type="url" id="perfil_github" name="perfil_github"
+                            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-slate-500 focus:border-slate-500 p-2 border">
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2 class="text-xl font-semibold border-b-2 border-slate-100 pb-2 mb-4">2. Perfil Técnico</h2>
+                <div class="grid grid-cols-1 gap-6">
+                    <div>
+                        <label for="nivel_experiencia" class="block text-sm font-medium">Nível de Experiência</label>
+                        <select id="nivel_experiencia" name="nivel_experiencia" 
+                            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-slate-500 focus:border-slate-500 p-2 border">
+                            <option value="estagio">Estágio</option>
+                            <option value="junior">Junior</option>
+                            <option value="pleno">Pleno</option>
+                            <option value="senior">Sênior / Specialist</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="tecnologias_dominio" class="block text-sm font-medium">Stack Tecnológica (Principais Linguagens/Frameworks)</label>
+                        <textarea id="tecnologias_dominio" name="tecnologias_dominio" rows="3" placeholder="Ex: React, Node.js, Python, AWS..."
+                            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-slate-500 focus:border-slate-500 p-2 border"></textarea>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2 class="text-xl font-semibold border-b-2 border-slate-100 pb-2 mb-4">3. Expectativas</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="pretensao_salarial" class="block text-sm font-medium">Pretensão Salarial Mensal (BRL)</label>
+                        <input type="number" id="pretensao_salarial" name="pretensao_salarial"
+                            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-slate-500 focus:border-slate-500 p-2 border">
+                    </div>
+                    <div>
+                        <label for="disponibilidade_inicio" class="block text-sm font-medium">Disponibilidade para Início</label>
+                        <select id="disponibilidade_inicio" name="disponibilidade_inicio" 
+                            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-slate-500 focus:border-slate-500 p-2 border">
+                            <option value="imediata">Imediata</option>
+                            <option value="duas_semanas">Em 15 dias</option>
+                            <option value="um_mes">Em 30 dias</option>
+                        </select>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2 class="text-xl font-semibold border-b-2 border-slate-100 pb-2 mb-4">4. Preferência de Trabalho</h2>
+                <div class="space-y-3">
+                    <p class="text-sm font-medium text-gray-700">Qual o seu modelo de trabalho ideal?</p>
+                    <div class="flex flex-col md:flex-row md:space-x-6 space-y-2 md:space-y-0">
+                        <label class="inline-flex items-center">
+                            <input type="radio" name="modelo_trabalho" value="remoto" class="w-4 h-4 text-slate-600 border-gray-300 focus:ring-slate-500" checked>
+                            <span class="ml-2 text-sm text-gray-700">100% Remoto</span>
+                        </label>
+                        <label class="inline-flex items-center">
+                            <input type="radio" name="modelo_trabalho" value="hibrido" class="w-4 h-4 text-slate-600 border-gray-300 focus:ring-slate-500">
+                            <span class="ml-2 text-sm text-gray-700">Híbrido</span>
+                        </label>
+                        <label class="inline-flex items-center">
+                            <input type="radio" name="modelo_trabalho" value="presencial" class="w-4 h-4 text-slate-600 border-gray-300 focus:ring-slate-500">
+                            <span class="ml-2 text-sm text-gray-700">Presencial</span>
+                        </label>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2 class="text-xl font-semibold border-b-2 border-slate-100 pb-2 mb-4">5. Interesses e Benefícios</h2>
+                <div class="space-y-3">
+                    <p class="text-sm font-medium text-gray-700">Quais benefícios são fundamentais para você? (Selecione todos que se aplicam)</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <label class="inline-flex items-center">
+                            <input type="checkbox" name="beneficios" value="saude" class="w-4 h-4 text-slate-600 border-gray-300 rounded focus:ring-slate-500">
+                            <span class="ml-2 text-sm text-gray-700">Plano de Saúde e Dental</span>
+                        </label>
+                        <label class="inline-flex items-center">
+                            <input type="checkbox" name="beneficios" value="educacao" class="w-4 h-4 text-slate-600 border-gray-300 rounded focus:ring-slate-500">
+                            <span class="ml-2 text-sm text-gray-700">Auxílio Educação / Cursos</span>
+                        </label>
+                        <label class="inline-flex items-center">
+                            <input type="checkbox" name="beneficios" value="horario_flexivel" class="w-4 h-4 text-slate-600 border-gray-300 rounded focus:ring-slate-500">
+                            <span class="ml-2 text-sm text-gray-700">Horário Flexível</span>
+                        </label>
+                        <label class="inline-flex items-center">
+                            <input type="checkbox" name="beneficios" value="participacao_lucros" class="w-4 h-4 text-slate-600 border-gray-300 rounded focus:ring-slate-500">
+                            <span class="ml-2 text-sm text-gray-700">PLR / Bônus Anual</span>
+                        </label>
+                    </div>
+                </div>
+            </section>
+
+            <div class="pt-6">
+                <button type="submit" id="btn_enviar_candidatura"
+                    class="w-full bg-slate-800 hover:bg-slate-900 text-white font-bold py-3 px-4 rounded-lg transition duration-300 ease-in-out transform hover:scale-[1.01]">
+                    Finalizar Cadastro e Enviar Currículo
+                </button>
+            </div>
+        </form>
+
+        <div id="feedback_usuario" class="hidden p-4 m-8 text-center rounded-lg font-medium"></div>
+    </div>
+
+    <script>
+        document.getElementById('form_cadastro_entrevista').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Coleta de dados estruturada para facilitar processamento por IA/Backend
+            const formData = new FormData(this);
+            const payload = Object.fromEntries(formData.entries());
+
+            console.log("Payload Gerado para Processamento:", payload);
+
+            // Simulação de Feedback
+            const feedback = document.getElementById('feedback_usuario');
+            feedback.classList.remove('hidden');
+            feedback.classList.add('bg-green-100', 'text-green-700');
+            feedback.innerText = "Candidatura enviada com sucesso! Nossa equipe técnica analisará seu perfil.";
+            
+            // Opcional: Desativar botão após envio
+            document.getElementById('btn_enviar_candidatura').disabled = true;
+            document.getElementById('btn_enviar_candidatura').classList.add('opacity-50', 'cursor-not-allowed');
+        });
+    </script>
+</body>
+</html>

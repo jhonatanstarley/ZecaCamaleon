@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="terminal.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+
+  <div id="terminal-container">
+    <div class="header">
+      <div class="header-left">
+        <button id="btn-menu-trigger" class="icon-btn" title="Menu"><i class="fas fa-bars"></i></button>
+        <span>🔥 ZECA_OS [v1.2.4]</span>
+      </div>
+      <div class="header-controls">
+        <!-- Config Button (Gear) -->
+        <button id="btn-admin-trigger" class="icon-btn" title="Configurações"><i class="fas fa-cog"></i></button>
+        <!-- Help Button (?) -->
+        <button id="btn-help-trigger" class="icon-btn" title="Ajuda"><i class="fas fa-question"></i></button>
+      </div>
+    </div>
+
+    <div id="output">
+      <div class="line system">[BOOT] Initializing LocalStorage... OK</div>
+      <div class="line system">[INIT] Loading ONNX Runtime (WASM)... OK</div>
+      <div class="line zeca">System Online. Waiting for commands...</div>
+      <div class="line system">Type <span class="highlight">/help</span> for manual or use the Menu.</div>
+    </div>
+
+    <div class="input-area">
+      <span class="prompt">root@zeca:~$</span>
+      <textarea id="command-input" rows="1" autofocus spellcheck="false"></textarea>
+      <button id="btn-send" class="send-btn" title="Enviar/Parar"><i class="fas fa-paper-plane"></i></button>
+    </div>
+  </div>
+
+  <!-- MENU DRAWER (SIDEBAR) -->
+  <div id="menu-overlay" class="drawer-overlay hidden"></div>
+  <div id="menu-drawer" class="drawer hidden">
+    <div class="drawer-header">
+      <span id="drawer-title">🚙 MENU RÁPIDO</span>
+      <button id="btn-menu-close" class="close-btn">✖</button>
+    </div>
+    <div class="drawer-content">
+
+      <!-- PT MENU CONTENT -->
+      <div id="drawer-pt">
+        <div class="drawer-section">
+          <span class="section-title">AÇÕES RÁPIDAS</span>
+          <button class="drawer-item" data-cmd="/scan"><i class="fas fa-search"></i> Escanear Página</button>
+          <button class="drawer-item" data-cmd="/fill"><i class="fas fa-bolt"></i> Preencher (Smart Fill)</button>
+          <button class="drawer-item" data-cmd="/dossier"><i class="fas fa-brain"></i> Vetorizar Dossiê</button>
+          <button class="drawer-item" data-cmd="/dossier --clear"><i class="fas fa-trash"></i> Limpar Memória</button>
+          <button class="drawer-item" data-cmd="/export"><i class="fas fa-download"></i> Exportar Memória</button>
+        </div>
+
+        <div class="drawer-section">
+          <span class="section-title">SISTEMA</span>
+          <button class="drawer-item" id="btn-drawer-admin"><i class="fas fa-cog"></i> Configurações</button>
+          <button class="drawer-item" id="btn-drawer-help"><i class="fas fa-question-circle"></i> Manual de
+            Ajuda</button>
+          <button class="drawer-item" id="btn-drawer-lang"><i class="fas fa-language"></i> Idioma: PT</button>
+        </div>
+      </div>
+
+      <!-- EN MENU CONTENT -->
+      <div id="drawer-en" class="hidden">
+        <div class="drawer-section">
+          <span class="section-title">QUICK ACTIONS</span>
+          <button class="drawer-item" data-cmd="/scan"><i class="fas fa-search"></i> Scan Page</button>
+          <button class="drawer-item" data-cmd="/fill"><i class="fas fa-bolt"></i> Smart Fill</button>
+          <button class="drawer-item" data-cmd="/dossier"><i class="fas fa-brain"></i> Vectorize Dossier</button>
+          <button class="drawer-item" data-cmd="/dossier --clear"><i class="fas fa-trash"></i> Clear Memory</button>
+          <button class="drawer-item" data-cmd="/export"><i class="fas fa-download"></i> Export Memory</button>
+        </div>
+
+        <div class="drawer-section">
+          <span class="section-title">SYSTEM</span>
+          <button class="drawer-item" id="btn-drawer-admin-en"><i class="fas fa-cog"></i> Settings (Config)</button>
+          <button class="drawer-item" id="btn-drawer-help-en"><i class="fas fa-question-circle"></i> Help
+            Manual</button>
+          <button class="drawer-item" id="btn-drawer-lang-en"><i class="fas fa-language"></i> Language: EN</button>
+        </div>
+      </div>
+
+      <div class="drawer-footer">
+        <small>Zeca Extension v1.2.4</small>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADMIN MODAL (SETTINGS ONLY) -->
+  <div id="admin-modal" class="modal-overlay hidden">
+    <div class="modal-content admin-content">
+      <div class="modal-header">
+        <h3>⚙️ CONFIGURATIONS</h3>
+        <button id="btn-close-admin" class="close-btn">✖</button>
+      </div>
+      <div class="modal-body">
+
+        <!-- PT CONFIG -->
+        <div id="config-pt" class="config-content">
+          <div class="setup-box persona-box">
+            <strong>🤖 CORE SYSTEM (PT-BR)</strong>
+
+            <div class="form-group">
+              <label>Provedor IA:</label>
+              <select id="admin-provider" class="terminal-select">
+                <option value="google">Google Gemini (Grátis)</option>
+                <option value="bigmodel">BigModel GLM-4 (Power)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>🔑 Gemini API Key:</label>
+              <input type="password" id="admin-gemini-key" placeholder="AIzaSy..." class="terminal-input">
+            </div>
+
+            <div class="form-group">
+              <label>🔑 BigModel API Key:</label>
+              <input type="password" id="admin-bigmodel-key" placeholder="key.secret" class="terminal-input">
+            </div>
+
+            <div class="form-group">
+              <label>🌡️ Criatividade (Temp): <span id="admin-temp-val">0.7</span></label>
+              <div class="range-container">
+                <input type="range" id="admin-temp" min="0" max="2" step="0.1" value="0.7">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>🎭 Personalidade:</label>
+              <select id="admin-persona" class="terminal-select">
+                <option value="1">1. Senior Dev (Sério)</option>
+                <option value="2">2. Mascote Zeca (Divertido)</option>
+                <option value="3">3. Econômica (Curto)</option>
+                <option value="4">4. Recrutador (RH)</option>
+                <option value="5">5. Mentor (Coach)</option>
+              </select>
+            </div>
+
+            <button id="btn-save-admin" class="action-btn full-width">SALVAR (REBOOT)</button>
+            <div id="admin-msg" class="status-msg"></div>
+          </div>
+          <div style="text-align:center; transform:translateY(10px)">
+            <button id="btn-toggle-config-lang" class="lang-link">Switch to English</button>
+          </div>
+        </div>
+
+        <!-- EN CONFIG -->
+        <div id="config-en" class="config-content hidden">
+          <div class="setup-box persona-box">
+            <strong>🤖 CORE SYSTEM (ENGLISH)</strong>
+
+            <div class="form-group">
+              <label>AI Provider:</label>
+              <select id="admin-provider-en" class="terminal-select">
+                <option value="google">Google Gemini (Free)</option>
+                <option value="bigmodel">BigModel GLM-4 (Power)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>🔑 Gemini API Key:</label>
+              <input type="password" id="admin-gemini-key-en" placeholder="AIzaSy..." class="terminal-input">
+            </div>
+
+            <div class="form-group">
+              <label>🔑 BigModel API Key:</label>
+              <input type="password" id="admin-bigmodel-key-en" placeholder="key.secret" class="terminal-input">
+            </div>
+
+            <div class="form-group">
+              <label>🌡️ Temperature: <span id="admin-temp-val-en">0.7</span></label>
+              <div class="range-container">
+                <input type="range" id="admin-temp-en" min="0" max="2" step="0.1" value="0.7">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>🎭 System Persona:</label>
+              <select id="admin-persona-en" class="terminal-select">
+                <option value="1">1. Senior Dev</option>
+                <option value="2">2. Funny Mascot</option>
+                <option value="3">3. Token Saver</option>
+                <option value="4">4. Recruiter</option>
+                <option value="5">5. Mentor</option>
+              </select>
+            </div>
+
+            <button id="btn-save-admin-en" class="action-btn full-width">SAVE CONFIGURATION</button>
+            <div id="admin-msg-en" class="status-msg"></div>
+          </div>
+          <div style="text-align:center; transform:translateY(10px)">
+            <button id="btn-toggle-config-lang-back" class="lang-link">Mudar para Português</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HELP MODAL (MANUAL ONLY) -->
+  <div id="help-modal" class="modal-overlay hidden">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>🔥 MAN_PAGES (MANUAL)</h3>
+        <div class="modal-controls">
+          <button id="btn-lang-toggle" class="lang-btn">EN</button>
+          <button id="btn-close-help" class="close-btn">✖</button>
+        </div>
+      </div>
+
+      <div class="modal-body">
+
+        <!-- PT MANUAL -->
+        <div id="content-pt" class="lang-content">
+          <div class="zeca-intro">
+            <h4>>_ NOVAS FUNCIONALIDADES BIGMODEL (GLM-4)</h4>
+            <p>Se você ativar o provedor <b>BigModel</b> nas configurações:</p>
+            <ul class="cmd-list">
+              <li>
+                <span class="cmd">RAG VETORIAL</span>
+                <span class="desc">Busca inteligente usando embeddings de alta precisão (2048 dims) para preencher
+                  formulários com MUITA precisão.</span>
+              </li>
+              <li>
+                <span class="cmd">WEB SEARCH</span>
+                <span class="desc">Ao usar <code>/gemini</code>, o modelo GLM-4-Plus consegue acessar a internet em
+                  tempo real para responder perguntas factuais.</span>
+              </li>
+            </ul>
+
+            <hr style="border:0; border-top:1px solid #333; margin: 15px 0;">
+
+            <h4>>_ COMANDOS E FUNCIONALIDADES</h4>
+            <ul class="cmd-list">
+              <li>
+                <span class="cmd">/scan</span>
+                <span class="desc"><strong>Escanear Página:</strong> Analisa o formulário atual e identifica campos
+                  preenchíveis.</span>
+              </li>
+              <li>
+                <span class="cmd">/fill</span>
+                <span class="desc"><strong>Preencher (Smart Fill):</strong> Usa IA e seus dados (Dossier) para preencher
+                  campos automaticamente.</span>
+              </li>
+              <li>
+                <span class="cmd">/dossier [texto]</span>
+                <span class="desc"><strong>Salvar/Ler Contexto:</strong> Adiciona informações à memória
+                  (cumulativa).</span>
+              </li>
+              <li>
+                <span class="cmd">/dossier --clear</span>
+                <span class="desc"><strong>Limpar Memória:</strong> Apaga permanentemente todo o contexto salvo.</span>
+              </li>
+              <li>
+                <span class="cmd">/gemini [pergunta]</span>
+                <span class="desc"><strong>Chat IA:</strong> Conversa livre. (Com Web Search se BigModel estiver
+                  ativo).</span>
+              </li>
+              <li>
+                <span class="cmd">/export</span>
+                <span class="desc"><strong>Backup:</strong> Baixa um arquivo JSON com toda a memória do Zeca.</span>
+              </li>
+              <li>
+                <span class="cmd">/config</span>
+                <span class="desc"><strong>Ajustes:</strong> Abre o painel de configurações (use o ícone ⚙️).</span>
+              </li>
+            </ul>
+            <br>
+            <p>ℹ️ <i>Dica: Você pode acessar todas essas funções pelo Menu Lateral (☰).</i></p>
+          </div>
+        </div>
+
+        <!-- EN MANUAL -->
+        <div id="content-en" class="lang-content hidden">
+          <div class="zeca-intro">
+            <h4>>_ NEW BIGMODEL FEATURES (GLM-4)</h4>
+            <p>If you enable <b>BigModel</b> provider in settings:</p>
+            <ul class="cmd-list">
+              <li>
+                <span class="cmd">VECTOR RAG</span>
+                <span class="desc">High-precision semantic search (2048 dims) for extremely accurate form
+                  filling.</span>
+              </li>
+              <li>
+                <span class="cmd">WEB SEARCH</span>
+                <span class="desc">When using <code>/gemini</code>, the GLM-4-Plus model can search the live internet to
+                  answer questions.</span>
+              </li>
+            </ul>
+
+            <hr style="border:0; border-top:1px solid #333; margin: 15px 0;">
+
+            <h4>>_ COMMANDS & FEATURES</h4>
+            <ul class="cmd-list">
+              <li>
+                <span class="cmd">/scan</span>
+                <span class="desc"><strong>Scan Page:</strong> Analyzes the current DOM for inputs.</span>
+              </li>
+              <li>
+                <span class="cmd">/fill</span>
+                <span class="desc"><strong>Smart Fill:</strong> Uses AI + Memory to autofill forms.</span>
+              </li>
+              <li>
+                <span class="cmd">/dossier [text]</span>
+                <span class="desc"><strong>Save/Read Context:</strong> Appends info to memory (cumulative).</span>
+              </li>
+              <li>
+                <span class="cmd">/dossier --clear</span>
+                <span class="desc"><strong>Clear Memory:</strong> Permanently wipes all saved context.</span>
+              </li>
+              <li>
+                <span class="cmd">/gemini [query]</span>
+                <span class="desc"><strong>AI Chat:</strong> Direct chat. (With Web Search if BigModel is
+                  active).</span>
+              </li>
+              <li>
+                <span class="cmd">/export</span>
+                <span class="desc"><strong>Backup:</strong> Downloads full memory as JSON.</span>
+              </li>
+              <li>
+                <span class="cmd">/config</span>
+                <span class="desc"><strong>Settings:</strong> Opens configuration panel (use the ⚙️ icon).</span>
+              </li>
+            </ul>
+            <br>
+            <p>ℹ️ <i>Tip: You can access all these functions via Sidebar Menu (☰).</i></p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="terminal.js"></script>
+</body>
+
+</html>
